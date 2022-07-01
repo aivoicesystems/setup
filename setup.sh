@@ -45,7 +45,7 @@ pkg aiv_server
 pkg dm
 
 echo "Setting up symbolic links"
-ln -s dm/setup/.vscode .
+ln -s dm/setup/src/.vscode .
 cd ../bin
 ln -s ../src/dm/setup/bin/* .
 cd ..
