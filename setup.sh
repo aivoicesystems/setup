@@ -34,4 +34,18 @@ pkg aiv_lib
 pkg aiv_server
 pkg dm
 
-ln -s dm/setup/bin/* ../bin
+ln -s dm/setup/.vscode .
+cd ../bin
+ln -s ../src/dm/setup/bin/* .
+
+echo "dm is now set up"
+case ":${PATH}:" in
+  *:${dir}/bin:*)
+    ;;
+  *)
+    echo "Be sure to include ${dir}/bin in your PATH"
+    ;;
+esac
+
+exit 0
+
