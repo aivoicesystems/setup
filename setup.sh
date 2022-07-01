@@ -2,29 +2,36 @@
 dir="${HOME}/.dm"
 url="https://github.com/aivoicesystems"
 
-fail() {
-  echo "$0: $@" >&2
+echo "Installing development manager into ${dir}"
+
+if [ -e "${dir}" ]
+then
+  echo "There already is a ${dir}"
+  echo "The installation can't continue"
   exit 1
-}
+fi
 
-[ ! -d "${dir}" ] || fail "${dir} already exists"
+if ! which git >/dev/null
+then
+  echo "This setup script requires git to be installed"
+  echo "The installation can't continue"
+  exit 1
+fi
+if ! which dart >/dev/null
+then
+  echo "This development manager requires dart to be installed"
+  echo "The installation can't continue"
+  exit 1
+fi
 
-which git >/dev/null || fail "this setup script needs git to work"
-which dart >/dev/null || fail "this setup script needs dart to work"
-
-echo "Setting up the development manager in ${dir}"
-
-mkdir "${dir}" || "can't create ${dir}"
-
-cd "${dir}" || fail "can't cd to ${dir}??"
-
-mkdir bin src || fail "can't create bin or src directory in $(pwd)"
-
-cd src || fail "can't cd to $(pwd)/src??"
+mkdir "${dir}"
+cd "${dir}"
+mkdir bin src
+cd src
 
 pkg() {
   local name="$1"
-  echo "$name"
+  echo "...$name"
   git clone -q "${url}/${name}.git" || fail "can't clone ${name}"
   cd "${name}" || fail "can't cd to $(pwd)/${name}"
   dart pub get >/dev/null || fail "can't run dart pub get in $(pwd)"
@@ -41,6 +48,7 @@ echo "Setting up symbolic links"
 ln -s dm/setup/.vscode .
 cd ../bin
 ln -s ../src/dm/setup/bin/* .
+cd ..
 
 echo "The development manager is now set up in ${dir}"
 case ":${PATH}:" in
