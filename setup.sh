@@ -12,6 +12,8 @@ fail() {
 which git >/dev/null || fail "this setup script needs git to work"
 which dart >/dev/null || fail "this setup script needs dart to work"
 
+echo "Setting up the development manager in ${dir}"
+
 mkdir "${dir}" || "can't create ${dir}"
 
 cd "${dir}" || fail "can't cd to ${dir}??"
