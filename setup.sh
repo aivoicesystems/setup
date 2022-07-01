@@ -23,12 +23,19 @@ cd src || fail "can't cd to $(pwd)/src??"
 pkg() {
   local name="$1"
 
-  git clone "${url}/${name}.git" || fail "can't clone ${name}"
+  echo "$name"
+
+  echo "  git clone..."
+  git clone -q "${url}/${name}.git" || fail "can't clone ${name}"
+
+  echo "  dart pub get..."
   cd "${name}" || fail "can't cd to $(pwd)/${name}"
-  dart pub get || fail "can't run dart pub get in $(pwd)"
+  echo "Running "
+  dart pub get >/dev/null || fail "can't run dart pub get in $(pwd)"
   cd ..
 }
 
+echo "Fetching packages in $(pwd)"
 pkg aiv_test
 pkg aiv_lib
 pkg aiv_server
