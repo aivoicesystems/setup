@@ -22,13 +22,8 @@ cd src || fail "can't cd to $(pwd)/src??"
 
 pkg() {
   local name="$1"
-
   echo "$name"
-
-  echo "(git clone)"
   git clone -q "${url}/${name}.git" || fail "can't clone ${name}"
-
-  echo "(dart pub get)"
   cd "${name}" || fail "can't cd to $(pwd)/${name}"
   dart pub get >/dev/null || fail "can't run dart pub get in $(pwd)"
   cd ..
@@ -40,11 +35,12 @@ pkg aiv_lib
 pkg aiv_server
 pkg dm
 
+echo "Setting up symbolic links"
 ln -s dm/setup/.vscode .
 cd ../bin
 ln -s ../src/dm/setup/bin/* .
 
-echo "dm is now set up"
+echo "The development manager is now set up in ${dir}"
 case ":${PATH}:" in
   *:${dir}/bin:*)
     ;;
@@ -54,4 +50,3 @@ case ":${PATH}:" in
 esac
 
 exit 0
-
