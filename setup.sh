@@ -25,17 +25,16 @@ pkg() {
 
   echo "$name"
 
-  echo "  git clone..."
+  echo "(git clone)"
   git clone -q "${url}/${name}.git" || fail "can't clone ${name}"
 
-  echo "  dart pub get..."
+  echo "(dart pub get)"
   cd "${name}" || fail "can't cd to $(pwd)/${name}"
-  echo "Running "
   dart pub get >/dev/null || fail "can't run dart pub get in $(pwd)"
   cd ..
 }
 
-echo "Fetching packages in $(pwd)"
+echo "Fetching packages into $(pwd)"
 pkg aiv_test
 pkg aiv_lib
 pkg aiv_server
