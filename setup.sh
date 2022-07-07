@@ -39,7 +39,7 @@ pkg() {
 }
 
 echo "Fetching packages into $(pwd)"
-pkg aiv_test
+pkg aiv_dev
 pkg aiv_lib
 pkg aiv_server
 pkg dm
